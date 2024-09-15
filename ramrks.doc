@@ -1,0 +1,100 @@
+-npm init is a command used to create the package.json.
+-the entry point is the file where your web application will starts.
+-after we run the command npm i we start our packages like they are stored in the dependencies like:
+ /npm i express.
+ /npm i mongoose body-parser bcrypt.
+ /npm dotenv if the project it s not local.
+-The package-lock.json file ensures that all dependencies are installed with the exact versions across different environments, providing consistency and preventing version-related bugs. It speeds up installations and helps maintain security by locking the entire dependency tree. This file should be committed to version control for stable project management.
+-here in the app.listen the first parameter is the port and the second can deffer it can be nothing or callback function or hostname which means the ip of the net we are expecting a response from it.
+-if you want your server to run in every change you made to your code you need to install the package nodemon --save-dev.
+-here since amani and server are not built in scripts so we need each time to run the npm run amani to execute it not like start which is built in by default.
+-never forget when you call for a url of a web page to use the res.send so this will show you what to appear in the web page.
+-here when we do const con = mongoose.connect("url") here we are making a connection to a mongoose database and it returns a promise and its result is stored in the con variable.
+-here we do the connection to the database in a try-catch block to handle if the connection is not established.
+-here we have installed the extension mongo snippet for nodejs.
+-here we assign to a field the attribute index to tell to it that based on this field we are gonna created an index to fast search using it.
+-here in this method of working the controller directory is used for the definition of the callback functions.
+-the differnce between newuser = new user (req.body) and newuser = user.create(req.body) is that the second one comes from libraries like odm it creates this instance of user and saves it automatically as for the first one it create this instance in the memory and then we need to do newuser.save() to save it in the database.
+-the problem also i have faced was in the exporting and importing for example if i do export const createuser here i can have different exports with the same priority there is no default so in the import i need to precise the correct name between two braces instead if i do export default here i am exporting this one with more priority so in the import i dont need the precised name and i dont need the curvy braces.
+-the differnce between the bodyparser and the express.json is that the first one is needed in the express versions before 4.16.x and you need to install its packages as for the second one you will find it by default in all the versions after that version and it is by default i mean no need to install added packages.
+-its role i mean the middleware that parses the body is to parse the data sent by the user to the server to json so it can use it after.
+-next in the middleware is a function used to pass control to the next middleware in the stack.
+-we have also installed using the command npm i express-async-handler the handler so instead of each time we handle the error in each endpoint we call the handler we create.
+-i have also installed the extension node-readme.
+-here every time the user login a new token is created for this user.
+-here we have used in the postman the method post since it is more secure and we are each time starting a new session.
+-session is the period while the user is interacting with the web app.
+-in the login we have used the post method since we are creating a new token each time and this cant match with the get method.
+-in the delete user we just need to specify that the method is delete and that the function we use in the database in findbyidanddelete.
+-here by default in the schema i cant use the objectid except if i call it from the schema.Types .
+-after we end with the the fields in the database we can set the timestamps by make in it between {}.
+-never never import module you wont use it.
+-the components of the request are the headers is which we sent the metadata like the token the params in which we specified the id the query in which we can specified more about the request and the body but dont forget that this is in an http request.
+-after all these we have installed the cookie-parser and use it for refreshing the token instead of each time i need to login.
+-in the refresh token it is stored in the cookie and checked in every request for the authentification.
+-here res.clearcookie is a built in function in express used to clear the cookie we need to precise the name of this cookie and all the options we have used to declare this cookie.
+-when we login we find the cookie in the cookie part and when we logout we dont find it in the cookie part.
+-we can also check for this in the cookies.
+-we can used slugs for the user experience instead of https://example.com/product/12345, you get https://example.com/product/wireless-bluetooth-headphones.
+-the ref option is used to create a relation between the current schema and another collection.
+-in each controller we need to import the model required.
+-if we enter a secret key with the cookieparser then we can get what is stored in those cookies using req.signedCookies instead we can just use req.cookies.
+-NEVER FORGET THE .JS IN THE IMPORTATION.
+-IN THE mongoose.SCHEMA.TYPES.OBJECTID THE TYPES MUST BE IN CAPITAL.
+-we have also installed the morgan package.
+-if you  encounter this warning this means that you need to specify the format of the morgan morgan deprecated undefined format: specify a format file:\C:\e_commerce\index.js:19:9
+morgan deprecated default format: use combined format file:\C:\e_commerce\index.js:19:9 like tiny ....
+-when i have used the dev in the morgan this what has appears in the terminal GET /api/product/66cebd65a3e5708e7401de3b 200 12.632 ms - 256
+GET /api/product/products 200 3.111 ms - 499 the url , the status , the time , and the size of the response body.
+-after we have also installed the slugify packages.
+-in this case slugify is used to transform a name to a slug.
+-the filter must match the one in the database schema.
+-we can use post for deletion but by convention post is used for creating or submitting data not deletion so this can lead to a misunderstanding and convention kill i mean the convention of the http.
+-here http://example.com/search?term=javascript&sort=asc term and sort are the query parameters.
+-req.query is an object where each key-value pair corresponds to a query parameter and its value.
+-foreach is an array function which is used for its side affect result not for return since it returns always undefined so if we want to see its result we need to make the element that we have made changes on it in the console otherwise if we assign a refernce to the foreach the result will be undefined.
+-foreach doesnt return a result of the operation like deleting from the array and so on but it always return undefined.
+-here if we do const o = req.query o and req.query both of them are refrences to the same object so if we made changes on one of them the other will be affected instead if we use the spread operator (...) in this case we are creating a copy of this object that s all, we call this copy shallow copy.
+-when you use foreach you are interested on the side effect performed with the callback rather than the return.
+-if you assign a variable to the result of foreach this variable will be undefined.
+-Exactly! The \b in regular expressions is used to match positions where a word character (like letters, digits, or underscores) is next to a non-word character (like spaces, punctuation, or other symbols), in this case if we take catalogue and cat! and the regular expression is \bcat\b then cat! is matched.
+-JSON.parse() is used to transform the string to an js object.
+-in mongoose if we want to make comparison or searchs based on numbers we have to make the gte and the others $gte.
+-The $ prefix is used in MongoDB to denote special operators. When you see something like $gte, it tells MongoDB that you're using a comparison operator, not just a regular field.
+-if we add in the select - this means that we are not going to make this field appearing.
+-skip(skip): This skips the specified number of documents, based on the current page. If you're on the second page and limit is 10, skip would be 10, meaning the first 10 documents are skipped,limit(limit): This limits the number of documents returned to the specified limit. If limit is 10, then only 10 documents will be returned.
+-product.countdocuments is a predefined function in mongodb.
+-crypto is a built-in module in Node.js that provides cryptographic functionality. It allows developers to perform operations such as encryption, decryption, hashing, and creating random values. The crypto module is widely used for securing data, generating secure tokens, and ensuring data integrity.
+-we have also installed the package of node mailer for handling the send of emails.
+-the transporter of the email contains all the necessary information about the email of the web app.
+-You cannot use await directly in the global scope or in non-async functions. Wrapping the code in an async function allows you to use await to handle asynchronous operations.
+-we hash the tokens If someone gains access to your database, they shouldn't be able to retrieve sensitive information like tokens. By hashing the token, even if the database is exposed, the actual reset token is not available in plain text.
+-If the reset token is stored in plain text, an attacker with access to the database can use it directly to reset any user's password without needing their email or authorization, then he can use it in the url of the setting of the password eventhough he dont need to access the email by doing the following  https://yourwebsite.com/reset-password?token=abcd1234efgh5678.
+-but in this case until now i didnt get why we make the matching between the hashed and plain token.
+-when i do the npm run amani it is accepted but the nodemon . not this is why Continue using npm run amani to start your application with nodemon. This ensures you're using the locally installed nodemon.
+-i have done this npm install -g nodemon so i will install it globally and can use it in the terminal like nodemon . .
+-Local installation of packages involves adding them to your project's node_modules directory, making them available only within that specific project. You install local packages with the command npm install <package-name> --save-dev and can use them through npm scripts defined in your package.json or with npx. This approach helps manage dependencies on a per-project basis and avoids conflicts between projects. In contrast, global installation installs packages system-wide, allowing you to use them from anywhere on your system with the command npm install -g <package-name>. This is convenient for tools and utilities used across multiple projects, but it does not manage versions on a per-project basis. Using local installation helps ensure consistent dependencies and avoids potential issues with different project requirements.
+-for the devdependencies we use them only in the phase of developping  and testing phases of your project. They are not required for your application to run in production , we use them more in our terminal to customize it they are for testing to make them present in the devdependencies we must use the --save-dev option, nodemon, eslint, or jest.
+-as for the others These are packages required for your application to run in production , we do like always like mongoose , axios ... .
+-in both cases those packages are locally installed.
+-never make mistakes in the postman in the method used.
+-$pull is used to remove from the mongodb database elements.
+-You are calling res.json(blog) multiple times (before checking if the blog was disliked, liked, etc.). Once res.json is called, the response is sent, and no further code execution can modify the response. This leads to an issue since you're attempting to return the response before completing all operations.
+-here be careful in the use of the methods of find all of them expect the id to be only one element not an object.
+-if i have multiple res.json(element) of the same element the last one is the one who will be called and appeared in the postman.
+-in the findOne({}) here we must pass an object not an id, the id we pass it in the case of findById().
+-i have also faced a problem which is when i try to get the document i had in the databse before i rename it i cant, hhh the problem was that i have deleted this document and i have forgot to refresh in the mongodb.
+-by using the console.log(data) we send the data to the terminal but when we do the res.json we send it to the postman in this case.
+-Cloudinary, a cloud-based service for managing media files like images and videos.
+-cloudinary: This module provides access to Cloudinary’s API functions. You use it to interact with Cloudinary’s services, such as uploading files.
+-Multer is a Node.js middleware used for handling multipart/form-data, which is the format used for uploading files. It enables easy file uploads in Express.js applications by providing configurable storage engines (memory or disk). It also allows you to set limits on file size and filter which files are accepted.
+-sharp: This is a library used for image processing, such as resizing and converting images to different formats.
+-path: This Node.js core module provides utilities for working with file and directory paths. It’s used to construct correct file paths.
+-example of mime types:
+ -"image/jpeg" for JPEG images.
+ -"image/png" for PNG images.
+ -"application/pdf" for PDF files.
+ -"text/plain" for plain text files.
+-sharp is a popular image processing in node.js.
+-the difference between sharp and multer path in that the second one is the one we upload the images to it for the first time before using sharp then those images are saved in the sharp path.
+-here i have also installed the sharp and url and path multer packages.
