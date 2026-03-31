@@ -19,7 +19,8 @@ const createUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
   // remember here i need to precise that the field i am searching depending on it is email.
   // remember here if we have an async function then inside we must have await i mean promise and if we want to use the predefined function of the database we must first specify which database to deal with.
-  const findUser = await User.findOne({ email: email });
+  const findUser = await User.findOne({ email });
+  console.log("this user is being created");
 
   if (!findUser) {
     // remember here in this case if there is no user that has the same email as this user we create a one.
@@ -36,41 +37,33 @@ const createUser = asyncHandler(async (req, res) => {
 // * login user.
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  //   const token = generateKey( req.params._id );
-  // console.log( email , password );
-  // ? we need first check for the existence of the user.
-  const findUser = await User.findOne({ email: email });
+
+  // Check for user existence
+  const findUser = await User.findOne({ email });
   if (findUser && (await findUser.isPasswordMatched(password))) {
     const token = generateKey(findUser.id);
     const refreshToken2 = refreshToken(findUser.id);
-    const updateUser = await User.findByIdAndUpdate(
-      findUser.id,
-      { refreshToken: refreshToken2 },
-      { new: true }
-    );
-    // remember here in the function of the database we need to specify the database name.
-    // remember here in this case after we generate the refresh token we add it as field in the db.
+    if(token) console.log("this is the token attached:" , token);
+    if(refreshToken2) console.log("this is the second token attached:" , refreshToken2);
+    // Update user's refresh token in the database
+    await User.findByIdAndUpdate(findUser.id, { refreshToken: refreshToken2 }, { new: true });
+    
+    // Set refresh token in a cookie
     res.cookie("refreshToken", refreshToken2, {
       httpOnly: true,
-      maxAge: 72 * 60 * 60 * 1000,
+      secure:false,
+      maxAge: 72 * 60 * 60 * 1000, // 72 hours
     });
-    // remember here in this case we have used the cookie function which is used to store a cookie in the user s computer cookie is a small piece of data which is sent every time when we sent a request to the server.
-    // remember the first argument is the name of the cookie we need it to identify each time from the computer the data we want to send.
-    // remember the second argument is the value of this cookie in this case it is refrechToken2.
-    // remember the third argument is the options.
-    // remember Exactly! When a cookie is marked as HTTP-only, it’s like putting the cookie in a special box that only the server has the key to. No other scripts, including any that hackers might try to run, can see, touch, or change the cookie. This keeps the cookie safe from being stolen or messed with by anything on the website.
-    // remember in this case we can t do document.cookie. this This helps protect against cross-site scripting (XSS) attacks, where malicious scripts might try to steal cookies from a user's browser.
-    // remember here the maxage is counted in millieseconds.
+
+    // Send user info and token as response
     res.json({
-      _id: findUser?._id,
-      mobile: findUser?.mobile,
-      email: findUser?.email,
-      token: token,
+      _id: findUser._id,
+      mobile: findUser.mobile,
+      email: findUser.email,
+      token,
     });
-    // remember here every time i login a token is generated for a new time for the simple token i mean the one of one day.
-    // remember here ?. is the optional operator it is used to extract the information from the findUser if it is defined then it extracts them in a normal way otherwise it returns underfind and not an error.
   } else {
-    throw new Error("login impossible");
+    throw new Error("Login failed");
   }
 });
 // * logout from the count.
@@ -307,11 +300,20 @@ const loginAdmin = asyncHandler(async (req, res) => {
 const getWishlist = asyncHandler(async (req, res) => {
   try {
     const { _id } = req.user;
-    const findUser = await User.findById(_id).populate("wishlist");
-    // remember is used to automatically replace the specified paths in a document with the actual referenced documents.
-    res.json(findUser);
+    const user = await User.findById(req.user._id).populate({
+      path: 'wishlist',
+      select: 'name price image ratings', // Select specific fields to return (e.g., name, price, image)
+    });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      success: true,
+      wishlist: user.wishlist,
+    });
   } catch (error) {
-    throw new Error(error);
+    res.status(500).json({ success: false, message: error.message });
   }
 });
 // * save user address.

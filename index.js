@@ -12,7 +12,7 @@ import ProdCategoryRouter from './routes/prodCategoryRouts.js';
 import BlogCategoryRouter from './routes/blogCategoryRoutes.js';
 import BrandRouter from './routes/brandRoutes.js';
 import couponRouter from './routes/couponRoutes.js';
-
+import cors from 'cors';
 // import requestLogger from './middlewares/requestLogger.js';
 // import api from './api/index.js';
 // import CONFIG from './config.json' assert {type: 'json'}
@@ -23,6 +23,10 @@ dotenv.config();
 database();
 const PORT = process.env.PORT || 8001;
 app.use(morgan('dev'));
+app.use(cors({
+    origin: 'http://localhost:3000', // Adjust this based on where your React app is running
+    credentials: true,
+  }));
 // remember in this case i have used this to get more information about the passed requests.
 app.use(express.json());
 app.use(cookieParser());

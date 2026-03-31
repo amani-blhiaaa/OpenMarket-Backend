@@ -1,7 +1,7 @@
 import cloudinary from "cloudinary";
 import dotenv from "dotenv";
 import expressAsyncHandler from "express-async-handler";
-dotenv.config();
+KOdotenv.config();
 cloudinary.config({
   cloud_name: process.env.a,
   api_key: process.env.b,
